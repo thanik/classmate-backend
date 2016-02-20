@@ -62,7 +62,7 @@ class AnnouncementController extends Controller
         $app_access_token = $app_access_token_request->getDecodedBody()['access_token'];
         $noti_param = [
             'access_token' => $app_access_token,
-            'href' => '/course/'.$course->id.'/announcements',
+            'href' => 'student/course/'.$course->id.'/announcements',
             'template' => '@['.$this_user->facebook_id.'] just posted a new announcement on '.$course->course_code,
         ];
         foreach(Course::find($request->input('data.relationships.course.data.id'))->users()->where('role',0)->get() as $student)

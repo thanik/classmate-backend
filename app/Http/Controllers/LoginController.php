@@ -55,7 +55,7 @@ class LoginController extends Controller
                     ->setExpiration(time() + 10800)// Configures the expiration time of the token (exp claim)
                     ->set('uid', $user->id)// Configures a new claim, called "uid"
                     ->set('name', $user->name)
-                    ->set('avatar_filename', $user->avatar_filename)
+                    ->set('avatar_filename', env('USERDATA_DOMAIN').'/avatars/'.$user->avatar_filename)
                     ->set('default_role', $user->default_role)
                     ->sign($signer, env('TOKEN_HMAC_KEY'))
                     ->getToken(); // Retrieves the generated token
@@ -256,8 +256,9 @@ class LoginController extends Controller
                     $new_user->organizations()->attach($request->input('organization_id'),['role' => $request->input('role'), 'student_id' => $request->input('student_id'), 'faculty_field' => $request->input('faculty_field')]);
 
                     //download avatar from $response_header['Location']
-                    Storage::put('avatars/'.$new_user->id.'.jpg',file_get_contents($response_header['Location']));
-                    $new_user->avatar_filename = 'avatars/'.$new_user->id.'.jpg';
+                    $filename = $new_user->id.'-'.uniqid();
+                    Storage::put('avatars/'.$filename.'.jpg',file_get_contents($response_header['Location']));
+                    $new_user->avatar_filename = $filename.'.jpg';
                     $new_user->save();
 
                     return response()->json(['status' => 'success'],200);

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
+use Storage;
 
 class UserController extends Controller
 {
@@ -51,13 +52,13 @@ class UserController extends Controller
     {
         try
         {
-            $user = User::find($id)->firstOrFail();
+            $user = User::find($id);
             $response['data'] = [
                 'type' => 'user',
                 'id' => $user->id,
                 'attributes' => [
                     'name' => $user->name,
-                    'avatar_filename' => $user->avatar_filename,
+                    'avatar-filename' => env('USERDATA_DOMAIN').'\\avatars\\'.$user->avatar_filename,
                 ],
             ];
 

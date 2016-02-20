@@ -292,7 +292,7 @@ class CourseController extends Controller
                 'title' => $latest_material->title,
                 'time' => date('c',strtotime($latest_material->updated_at)),
                 'name' => $latest_material->user()->first()->name,
-                'user_pic' => $latest_material->user()->first()->avatar_filename,
+                'user_pic' => env('USERDATA_DOMAIN').'\\avatars\\'.$latest_material->user()->first()->avatar_filename,
             ],200);
         }
         catch(ModelNotFoundException $e)
@@ -313,7 +313,7 @@ class CourseController extends Controller
                 'content' => $latest_announcement->content,
                 'time' => date('c',strtotime($latest_announcement->updated_at)),
                 'name' => $latest_announcement->user()->first()->name,
-                'user_pic' => $latest_announcement->user()->first()->avatar_filename,
+                'user_pic' => env('USERDATA_DOMAIN').'\\avatars\\'.$latest_announcement->user()->first()->avatar_filename,
             ],200);
         }
         catch(ModelNotFoundException $e)
@@ -333,7 +333,7 @@ class CourseController extends Controller
                 'title' => $latest_discussionpost->topic,
                 'time' => date('c',strtotime($latest_discussionpost->updated_at)),
                 'name' => $latest_discussionpost->user()->first()->name,
-                'user_pic' => $latest_discussionpost->user()->first()->avatar_filename,
+                'user_pic' => env('USERDATA_DOMAIN').'\\avatars\\'.$latest_discussionpost->user()->first()->avatar_filename,
             ],200);
         }
         catch(ModelNotFoundException $e)

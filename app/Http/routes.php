@@ -83,6 +83,9 @@ Route::group(['middleware' => ['api'],'prefix' => 'api'], function () {
            Route::resource('organization','OrganizationController',['except' => [
                'edit','create'
            ]]);
+
+           Route::get('files/avatar/{id}','FileController@getAvatarPicture');
+           Route::get('files/{file_name}'.'FileController@downloadFile');
        });
    });
 });

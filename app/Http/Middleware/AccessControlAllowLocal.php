@@ -35,9 +35,16 @@ class AccessControlAllowLocal
         }
 
         $response = $next($request);
-        foreach($headers as $key => $value)
+        /*foreach($headers as $key => $value)
             $response->header($key, $value);
         return $response;
-        return $next($request);
+        return $next($request);*/
+        $response->headers->set('Access-Control-Allow-Origin' , '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Origin, Authorization');
+
+        return $response;
+
+
     }
 }
